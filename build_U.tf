@@ -10,7 +10,7 @@ resource "aws_instance" "mysql" {
 }
 
 resource "aws_instance" "tomcat" {
-    ami "ami-00399ec92321828f5"  # Linux Ubuntu Server 20.04 LTS
+    ami = "ami-00399ec92321828f5"      # Linux Ubuntu Server 20.04 LTS
     instance_type = "t2.micro"
 }
 
@@ -86,4 +86,5 @@ resource "aws_security_group" "DB_Security_group" {
   tags = {
     Name = "DB_Security_group"
     Owner = "Qantas"
+  }
 }
