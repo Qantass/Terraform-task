@@ -50,12 +50,26 @@ resource "aws_security_group" "DB_Security_group" {
   
 
   ingress {
-    from_port = 80
-    to_port = 80
+    from_port = 3306    # Ports for MySQL
+    to_port = 3306
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port = 8080    # Ports for TomCAT
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 8443    # Ports for TomCAT
+    to_port = 8443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
   ingress {
     from_port = 22
     to_port = 22
