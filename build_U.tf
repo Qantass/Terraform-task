@@ -1,4 +1,4 @@
-#-----------------------A--W--S---------------------------
+#----------------------- A  W  S ---------------------------
 provider "aws" {
     profile = "terraform"
     region = "us-east-2"
@@ -14,6 +14,7 @@ resource "aws_instance" "tomcat" {
     instance_type = "t2.micro"
 }
 
+#---------------------- V  P  C -------------------------------
 resource "aws_vpc" "main_vpc" {
   cidr_block       = "10.0.0.0/16"    # VPC 
   instance_tenancy = "default"
@@ -23,6 +24,7 @@ resource "aws_vpc" "main_vpc" {
   }
 }
 
+#---------------------- S  U  B ----------------------------------------
 resource "aws_subnet" "main1" {
   vpc_id     = aws_vpc.main_vpc.id    # Subnet for mysql
   cidr_block = "10.0.1.0/24"
@@ -39,4 +41,36 @@ resource "aws_subnet" "main2" {
   tags = {
     Name = "Tomcat_Sub"
   }
+}
+
+#------------------ SECURITY GROUP ----------------------------------------
+resource "aws_security_group" "DB_Security_group" {
+  name = "DB_Security_group"
+  description = "My DB_Security_group"
+  
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "DB_Security_group"
+    Owner = "Qantas"
 }
