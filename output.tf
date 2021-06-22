@@ -10,3 +10,6 @@ output "data_aws_availability_zones" {
 output "data_aws_region_name" {
     value = data.aws_region.current.name
 }
+output "data_latest_ubuntu_ami_id" {
+    value = data.aws_ami.latest_ubuntu.id
+}
