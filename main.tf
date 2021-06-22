@@ -16,6 +16,7 @@ resource "aws_eip" "static_tom"{
 resource "aws_instance" "mysql" {
     ami = "ami-00399ec92321828f5"  # Linux Ubuntu Server 20.04 LTS 
     instance_type = "t2.micro"
+    vpc_security_group_ids = [aws_security_group.db.id]
   tags = {
     Name = "MySQL Server"
   }
@@ -28,6 +29,7 @@ resource "aws_instance" "mysql" {
 resource "aws_instance" "tomcat" {
     ami = "ami-00399ec92321828f5"      # Linux Ubuntu Server 20.04 LTS
     instance_type = "t2.micro"
+    vpc_security_group_ids = [aws_security_group.db.id]
   tags = {
     Name = "TomCat Server"
   }
@@ -44,24 +46,5 @@ resource "aws_vpc" "db_vpc" {
 
   tags = {
     Name = "db_vps"
-  }
-}
-
-#---------------------- S  U  B ----------------------------------------
-resource "aws_subnet" "db1" {
-  vpc_id     = aws_vpc.db_vpc.id    # Subnet for mysql
-  cidr_block = "10.0.1.0/24"
-  
-    tags = {
-    Name = "MySQL_Sub"
-  }
-}
-
-resource "aws_subnet" "db2" {
-  vpc_id     = aws_vpc.db_vpc.id   # Subnet for tomcat
-    cidr_block = "10.0.2.0/24"
-  
-  tags = {
-    Name = "Tomcat_Sub"
   }
 }

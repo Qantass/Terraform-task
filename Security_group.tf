@@ -1,7 +1,8 @@
 #------------------ SECURITY GROUP ----------------------------------------
-resource "aws_security_group" "DB" {
+resource "aws_security_group" "db" {
   name = "DB_Security_group"
   description = "My DB_Security_group"
+  vpc_id = "${aws_vpc.db_vpc.id}"
 
   dynamic "ingress" {
       for_each = ["80", "8080", "3360"]
@@ -11,7 +12,7 @@ resource "aws_security_group" "DB" {
           protocol = "tcp"
           cidr_blocks = ["0.0.0.0/0"]
 
-      }
+        }
 }
    ingress {
     from_port = 22
